@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/MakeNowJust/heredoc"
-	"github.com/cli/cli/v2/api"
 	"github.com/cli/cli/v2/internal/ghrepo"
 	"github.com/cli/cli/v2/pkg/cmd/project/shared"
 	"github.com/cli/cli/v2/pkg/cmdutil"
@@ -66,19 +65,10 @@ func runList(opts *ListOptions) error {
 	}
 
 	// TODO: interactive org selection
-
-	apiClient := api.NewClientFromHTTP(httpClient)
-
-	var projects = []api.ProjectV2{}
-	if len(opts.Organization) > 0 {
-		owner := ghrepo.New(opts.Organization, repo.RepoName())
-		projects, err = api.OrganizationProjectsV2(apiClient, owner)
-	} else {
-		projects, err = api.CurrentUserProjectsV2(apiClient, repo.RepoHost())
-	}
+	projects, err := shared.ListProjects(httpClient, repo, opts.Organization)
 
 	// TODO: handle auth error and suggest to run `gh auth login --scopes project`
-	if err != nil && !api.ProjectsV2IgnorableError(err) {
+	if err != nil {
 		return err
 	}
 
