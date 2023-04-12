@@ -24,6 +24,7 @@ import (
 	labelCmd "github.com/cli/cli/v2/pkg/cmd/label"
 	orgCmd "github.com/cli/cli/v2/pkg/cmd/org"
 	prCmd "github.com/cli/cli/v2/pkg/cmd/pr"
+	projectCmd "github.com/cli/cli/v2/pkg/cmd/project"
 	releaseCmd "github.com/cli/cli/v2/pkg/cmd/release"
 	repoCmd "github.com/cli/cli/v2/pkg/cmd/repo"
 	creditsCmd "github.com/cli/cli/v2/pkg/cmd/repo/credits"
@@ -103,6 +104,7 @@ func NewCmdRoot(f *cmdutil.Factory, version, buildDate string) *cobra.Command {
 	cmd.AddCommand(sshKeyCmd.NewCmdSSHKey(f))
 	cmd.AddCommand(statusCmd.NewCmdStatus(f, nil))
 	cmd.AddCommand(newCodespaceCmd(f))
+	cmd.AddCommand(projectCmd.NewCmdProject(f))
 
 	// the `api` command should not inherit any extra HTTP headers
 	bareHTTPCmdFactory := *f
