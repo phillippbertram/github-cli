@@ -15,8 +15,8 @@ func NewCmdProject(f *cmdutil.Factory) *cobra.Command {
 		Short: "",
 		Long:  "",
 		Example: heredoc.Doc(`
-			This command needs additional permissions.
-			In order to use this command, you must authenticate with the following scopes.
+			# Note! This command needs additional permissions.
+			# In order to use this command, you must authenticate with the following scopes.
 			$ gh auth login --scopes "project"
 
 			# List projects for the logged in user

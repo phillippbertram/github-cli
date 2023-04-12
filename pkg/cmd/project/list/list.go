@@ -29,8 +29,7 @@ func NewCmdList(f *cmdutil.Factory) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "list",
-		Short: "",
-		Long:  "",
+		Short: "List projects",
 		Example: heredoc.Doc(`
 			# List projects for the logged in user
 			$ gh project list
@@ -47,13 +46,13 @@ func NewCmdList(f *cmdutil.Factory) *cobra.Command {
 		},
 	}
 
+	// TODO: interactive org selection?
 	cmd.Flags().StringVarP(&opts.Organization, "org", "o", "", "List projects for an organization")
 
 	return cmd
 }
 
 func runList(opts *ListOptions) error {
-
 	httpClient, err := opts.HttpClient()
 	if err != nil {
 		return err
@@ -64,8 +63,13 @@ func runList(opts *ListOptions) error {
 		return err
 	}
 
+	defer opts.IO.StopProgressIndicator()
+	opts.IO.StartProgressIndicator()
+
 	// TODO: interactive org selection
+	// TODO: only retrieves "open" projects
 	projects, err := shared.ListProjects(httpClient, repo, opts.Organization)
+	opts.IO.StopProgressIndicator()
 
 	// TODO: handle auth error and suggest to run `gh auth login --scopes project`
 	if err != nil {

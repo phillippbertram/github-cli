@@ -15,9 +15,8 @@ func NewCmdImport(f *cmdutil.Factory) *cobra.Command {
 	opts := &ImportOptions{}
 
 	cmd := &cobra.Command{
-		Use:   "import [<path>]] [flags]",
-		Short: "",
-		Long:  "",
+		Use:   "import [<path>] [flags]",
+		Short: "Import a project from a file",
 		Example: heredoc.Doc(`
 			# interactive mode
 			$ gh project import
