@@ -26,8 +26,7 @@ type ViewOptions struct {
 	Interactive  bool
 	Organization string
 	ProjectId    *int
-
-	Web bool
+	Web          bool
 }
 
 func NewCmdView(f *cmdutil.Factory) *cobra.Command {
